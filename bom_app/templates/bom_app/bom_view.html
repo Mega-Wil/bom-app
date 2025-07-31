@@ -1,0 +1,32 @@
+{% extends 'bom_app/layout.html' %}
+
+{% block title %}BOM App - Bill of Materials{% endblock %}
+
+{% block content %}
+<div class="bom-container">
+    <div class="product-header">
+        <h2>Bill of Materials</h2>
+        <h3>Product: {{ product.name }}</h3>
+    </div>
+    
+    {% if bom %}
+        <ul class="bom-tree">
+            {% for item in bom %}
+                <li class="bom-item bom-level-{{ item.level }}">
+                    <span class="component-name">{{ item.component.name }}</span>
+                    <span class="component-quantity">Qty: {{ item.quantity }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="empty-bom">
+            <p>No components found for this product. This product has no bill of materials.</p>
+            <a href="{% url 'index' %}" class="back-link">← Back to Products</a>
+        </div>
+    {% endif %}
+    
+    {% if bom %}
+        <a href="{% url 'index' %}" class="back-link">← Back to Products</a>
+    {% endif %}
+</div>
+{% endblock %}

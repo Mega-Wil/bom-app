@@ -1,0 +1,36 @@
+{% extends 'bom_app/layout.html' %}
+
+{% block title %}BOM App - Home{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <div class="welcome-section">
+        <h2>Welcome to the BOM App</h2>
+        <p>Manage your Bill of Materials with ease</p>
+    </div>
+
+    <div class="products-section">
+        <h3 class="products-header">Products</h3>
+        {% if products %}
+            <ul class="products-list">
+                {% for product in products %}
+                    <li class="product-item">
+                        <div class="product-info">
+                            <a href="{% url 'bom_view' product.id %}" class="product-link">{{ product.name }}</a>
+                            {% if product.description %}
+                                <p class="product-description">{{ product.description }}</p>
+                            {% endif %}
+                            <small class="product-meta">Serial: {{ product.serial_number }} | Created: {{ product.created_at|date:"M d, Y" }}</small>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="empty-products">
+                <p>No products available yet.</p>
+                <a href="/admin/" class="admin-link">Add Products in Admin</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
